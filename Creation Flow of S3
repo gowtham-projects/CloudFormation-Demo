@@ -1,0 +1,28 @@
+Step 1:
+ Create an EC2 Instance/VS Code to write code to automate the process.
+  -> Created EC2 Instance
+     => check for aws --version(awscli is available or not)
+     * Create a Folder (mkdir cloudformation) -> cd cloudformation
+        Do in AI -  CloudFormation Template to create an S3 Bucket (YAML file to get)
+     * Create an Empty File (touch s3_bucket.yml)
+        -> vim s3_bucket.yml - add the YAML file here  (check using cat)
+
+Step 2:
+ Create IAM Role for - AWSCloudFormationFullAccess, AmazonS3FullAccess
+   and the IAM Role in EC2 → Instances → select your instance → Actions → Security → Modify IAM role → choose EC2-CFN-S3-Role → Update IAM role.
+   ==>If you can’t attach a role, you can use aws configure with access keys, but avoid that on servers if possible.
+
+                                                (OR)
+Create an IAM User, attach AWSCloudFormationFullAccess, AmazonS3FullAccess, and create access keys to configure it
+  - aws configure, provide accessid, keys
+
+Step 3:
+  Provide this -  aws cloudformation create-stack --stack-name demo-stack --template-body file://s3_bucket.yml
+   --once it is executed correctly, it creates a stackid. Check & Confirm the S3 Bucket & CloudFormation Stack
+
+Delete the Stack(it delete entire CF & S3)
+  Provide this - aws cloudformation delete-stack --stack-name demo-stack
+
+
+==> In this way, we can execute & automate all the resources
+
